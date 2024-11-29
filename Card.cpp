@@ -36,6 +36,7 @@ int Blue::getCardsPerCoin(int coins)
 
 int Blue::getCoinsPerCard(int cards)
 {
+    //when the chain doesnt make any coins
     if (cards < 4 && cards >= 0)
     {
         return 0;

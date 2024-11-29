@@ -1,6 +1,6 @@
 #include "Deck.h"
 
-
+//crawing a cards and deleteing it from the deck 
 Card *Deck::draw()
 {
    

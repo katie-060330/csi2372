@@ -6,8 +6,10 @@ using namespace std;
 class Card
 {
 public:
+//destructor 
     virtual ~Card() = default;
     virtual int getCardsPerCoin(int coins) = 0;
+    //added function to get thte number of coins per length of chain
     virtual int getCoinsPerCard(int cards) = 0;
     virtual string getName() = 0;
     virtual void print(ostream &out) const = 0;

@@ -3,7 +3,7 @@
 #include <cctype>
 #include "Table.h"
 using namespace std;
-void playCard(Player currentPlayer);
+void checkWhoWon(Table t);
 char input;
 
 // Checks user input to see if they have inputed a number
@@ -46,8 +46,18 @@ int main()
 
         // display table
         cout << table << endl;
-        // player draws a card
-        table.p1.hand.operator+=(table.deck->draw());
+        // player draws a card, if there are cards left otherwise break out of the gaem ends
+        Card *draw = table.deck->draw();
+        if (draw)
+        {
+            table.p1.hand.operator+=(draw);
+        }
+        else
+        {
+            checkWhoWon(table);
+            break;
+        }
+
         // if ta is not empty add a bean card to chains or discard them
         if (!table.ta.tradeArea.empty())
         {
@@ -179,7 +189,15 @@ int main()
 
         for (int i = 0; i < 3; i++)
         {
-            table.ta.operator+=(table.deck->draw());
+            draw = table.deck->draw();
+            if (draw)
+            {
+                table.ta.operator+=(draw);
+            }
+            else
+            {
+                break;
+            }
         }
 
         //*while teh top card of the discard matches any in the discad pile
@@ -211,7 +229,15 @@ int main()
         cout << "---------------------End player turn   ---------------------" << endl;
         for (int i = 0; i < 2; i++)
         {
-            table.p1.hand.operator+=(table.deck->draw());
+            draw = table.deck->draw();
+            if (draw)
+            {
+                table.p1.hand.operator+=(draw);
+            }
+            else
+            {
+                break;
+            }
         }
         cout << table.p1.getName() << "'s Chains.. \n"
              << endl;
@@ -227,15 +253,7 @@ int main()
         //! PLAYER 2 TURN
         if (table.deck->deck.empty())
         {
-            string p1 = table.p1.getName();
-            if (table.win(p1))
-            {
-                cout << p1 << " WINS!!!!" << endl;
-            }
-            else
-            {
-                cout << table.p2.getName() << " WINS!!!!" << endl;
-            }
+            checkWhoWon(table);
             break;
         }
         cout << "----------------------------- other players turn -----------------------------------" << endl;
@@ -255,7 +273,15 @@ int main()
         // display table
         cout << table << endl;
         // player draws a card
-        table.p2.hand.operator+=(table.deck->draw());
+        draw = table.deck->draw();
+        if (draw)
+        {
+            table.p2.hand.operator+=(draw);
+        }
+        else
+        {
+            break;
+        }
         // if ta is not empty add a bean card to chains or discard them
         if (!table.ta.tradeArea.empty())
         {
@@ -387,7 +413,15 @@ int main()
 
         for (int i = 0; i < 3; i++)
         {
-            table.ta.operator+=(table.deck->draw());
+            draw = table.deck->draw();
+            if (draw)
+            {
+                table.ta.operator+=(draw);
+            }
+            else
+            {
+                break;
+            }
         }
         // while the top most card matches the chain chain it up
 
@@ -419,7 +453,15 @@ int main()
         cout << "---------------------End player turn   ---------------------" << endl;
         for (int i = 0; i < 2; i++)
         {
-            table.p2.hand.operator+=(table.deck->draw());
+            draw = table.deck->draw();
+            if (draw)
+            {
+                table.p2.hand.operator+=(draw);
+            }
+            else
+            {
+                break;
+            }
         }
         cout << table.p2.getName() << "'s Chains.. \n"
              << endl;
@@ -433,27 +475,26 @@ int main()
              << table.p2.hand << endl;
         if (table.deck->deck.empty())
         {
-            string p1 = table.p1.getName();
-            if (table.win(p1))
-            {
-                cout << p1 << " WINS!!!!" << endl;
-            }
-            else
-            {
-                cout << table.p2.getName() << " WINS!!!!" << endl;
-            }
+           checkWhoWon(table);
             break;
         }
 
     } while (!table.deck->deck.empty());
+    checkWhoWon(table);
 
-    string p1 = table.p1.getName();
-    if (table.win(p1))
+   
+}
+
+void checkWhoWon(Table t){
+    cout<<"--------------------------------END OF GAME--------------------------------"<<endl;
+     string p1 = t.p1.getName();
+    if (t.win(p1))
     {
         cout << p1 << " WINS!!!!" << endl;
     }
     else
     {
-        cout << table.p2.getName() << " WINS!!!!" << endl;
+        cout << t.p2.getName() << " WINS!!!!" << endl;
     }
+
 }

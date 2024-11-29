@@ -7,7 +7,6 @@
 #include <typeinfo>
 #include "Card.h"
 
-
 using namespace std;
 
 template <class T>
@@ -16,8 +15,10 @@ class Chain
     std::vector<T> chain;
 
 public:
+    // adding cards to the chian
     Chain<T> &operator+=(Card *card)
     {
+        // make sure that they match the chain
         if (typeid(card) != typeid(chain.front()))
         {
             throw std::invalid_argument("Card doesn't match the chain");
@@ -47,24 +48,28 @@ public:
         return coins;
     }
 
+    // for checkign the chain type to add cards
     string getType()
     {
         return chain.empty() ? "Empty" : chain.front()->getName();
     }
 
+    // when the chains are full and they are forced to sell a chain becasue the player needs to sell
     int startFreshChain(Card *card)
     {
         int coins = sell();
         *this += card;
-        return coins; 
+        return coins;
     }
 
+    // similar  to get type but returns the acctual card
     Card *getCardType()
     {
         return chain.empty() ? nullptr : chain.front();
     }
 
-    friend ostream& operator<<(ostream &output, const Chain<T> &c)
+    // printing out the chains
+    friend ostream &operator<<(ostream &output, const Chain<T> &c)
     {
         if (c.chain.empty())
         {
@@ -73,28 +78,23 @@ public:
         else
         {
 
-            Card* front = c.chain.front();
+            Card *front = c.chain.front();
             string f = front->getName();
-            output<<f<< "\t"; 
-            
-            for(int i = 0; i < c.chain.size(); i++){
-                output<<f.at(0)<<" ";
+            output << f << "\t";
+
+            for (int i = 0; i < c.chain.size(); i++)
+            {
+                output << f.at(0) << " ";
             }
-            
-            // output << c.chain.front()->getName() << "\t";
-            // for (const T *card : c.chain)
-            // {
-            //     card->print(output);
-            //     output << " ";
-            // }
+
         }
         return output;
     }
-    int getSize(){
+    
+    int getSize()
+    {
         return chain.size();
     }
-    
-
 };
 
 #endif

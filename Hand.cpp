@@ -10,7 +10,7 @@ Hand &Hand::operator+=(Card *c)
 
 Card *Hand::play()
 {
-    //*returns and removes the card that the player must play, the highest ranking bean
+    //*returns and removes the card in the first slot
     if (hand.empty())
     {
         return nullptr;
@@ -45,6 +45,7 @@ Card *Hand::operator[](int i)
 }
 
 
+//prints out the hand, if the hand is empty it will say that 
 std::ostream &operator<<(std::ostream &out, const Hand &h)
 {
     if (h.hand.empty())

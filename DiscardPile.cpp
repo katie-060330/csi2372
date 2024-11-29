@@ -1,23 +1,13 @@
 #include "DiscardPile.h"
-//   DiscardPile::DiscardPile(istream& in, const CardFactory* cardFactory){
-// TODO ask what the input for the constuctors are becaseu they are all ahinvg the same inputs but it doesnt make any sense to me
-// do a for loop for the amount of lines in in
-/*   for(int i =0; in.gcount; i++){
-       Card card = in.getline();
-       discardPile.insert(card);
 
-
-   }*/
-//}
-
+//adds to the discard pile 
 DiscardPile &DiscardPile::operator+=(Card *c)
 {
-    // TODO return a refrence the the card just added to the discard pile
     discardPile.push_back(c);
     return *this;
 }
 
-//! done i think
+//removes the top from the discard pile and reases it, if it empty then it returns a null ptr 
 Card *DiscardPile::pickUp()
 {
     if (!discardPile.empty())
@@ -29,8 +19,8 @@ Card *DiscardPile::pickUp()
 
     return nullptr;
 }
-//! done i think
-Card* DiscardPile::top() const 
+// retuns the top card of the discard pile but doenst change anything 
+Card *DiscardPile::top() const
 {
 
     if (!discardPile.empty())
@@ -51,9 +41,9 @@ void DiscardPile::print(std::ostream &out)
     }
 }
 
-std::ostream& operator<<(ostream& os,const DiscardPile& dPile)
+//does nothing becaseu we overload this in teh table outstream 
+std::ostream &operator<<(ostream &os, const DiscardPile &dPile)
 {
-
 
     return os;
 }

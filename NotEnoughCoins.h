@@ -1,3 +1,4 @@
+//created execption for when the payer doesnt have enough coins to buy a third chain 
 #include <iostream>
 #include <string>
 using namespace std; 

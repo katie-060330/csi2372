@@ -1,54 +1,66 @@
 #include "TradeArea.h"
 
-    TradeArea::TradeArea(istream& in, const CardFactory cardFactory){
-        numberOfCards = 0;
-        //TODO same as other constructors
-    }
+TradeArea::TradeArea(istream &in, const CardFactory cardFactory)
+{
 
-    TradeArea& TradeArea::operator+=(Card* c){
-        //*adds the card but doesnt verify that it legally can be added ie the bean is already in the trading area
-        tradeArea.push_back(c);
-        return *this;
+}
 
-    }
-    bool TradeArea::legal(Card* c){
-        for(Card* card: tradeArea){
-        if(c->getName() == card->getName()){
-        return true;
+TradeArea &TradeArea::operator+=(Card *c)
+{
+    //*adds the card but doesnt verify that it legally can be added ie the bean is already in the trading area
+    tradeArea.push_back(c);
+    return *this;
+}
+//checks to see if this card is in the trade area
+bool TradeArea::legal(Card *c)
+{
+    for (Card *card : tradeArea)
+    {
+        if (c->getName() == card->getName())
+        {
+            return true;
         }
         return false;
+    }
 }
-    }
 
-    Card* TradeArea::trade(string s) {
-        //using iterator over list to find the 
-    Card* cardMatch = nullptr;  
-    for (auto it = tradeArea.begin(); it != tradeArea.end(); ++it) {
-        if ((*it)->getName() == s) {
-            cardMatch = *it;  
-            tradeArea.erase(it);  
-            return cardMatch; 
-            }
-    }
-    return nullptr;  
-    }
-
-    int TradeArea::numCards(){
-        return tradeArea.size();
-    }
-
-    void TradeArea::displayTradeArea(){
-        for(Card* c : tradeArea){
-            cout<< c->getName()<< " ";
+//check to see if this card can be traded and if it can, remove it from the trade block and return it, if the trade block is empty then return nill
+Card *TradeArea::trade(string s)
+{
+    // using iterator over list to find the
+    Card *cardMatch = nullptr;
+    for (auto it = tradeArea.begin(); it != tradeArea.end(); ++it)
+    {
+        if ((*it)->getName() == s)
+        {
+            cardMatch = *it;
+            tradeArea.erase(it);
+            return cardMatch;
         }
     }
-    void TradeArea::discard(){
-        tradeArea.clear();
+    return nullptr;
+}
+//getter
+int TradeArea::numCards()
+{
+    return tradeArea.size();
+}
 
+void TradeArea::displayTradeArea()
+{
+    for (Card *c : tradeArea)
+    {
+        cout << c->getName() << " ";
     }
-    std::ostream& operator<<(std::ostream& out, const TradeArea& tA) {
-       
-        return out;
-    }
+}
+//remove the trade area
+void TradeArea::discard()
+{
+    tradeArea.clear();
+}
+//overloaded in the table class
+std::ostream &operator<<(std::ostream &out, const TradeArea &tA)
+{
 
-    //?nd the insertion operator (friend) to insert all the cards of the trade area to an std::ostream.
+    return out;
+}

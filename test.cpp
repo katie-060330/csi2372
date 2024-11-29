@@ -33,16 +33,20 @@ int main()
     {
         cout << "--------------------- Player " << table.p1.getName() << " turn ---------------------" << endl;
 
+        //display the chains and coins and hand
+        cout << "\n Coins: "<< table.p1.getNumCoins() << endl;
+         cout << table.p1.getName() << "'s Chains.. \n"
+                 << endl;
         for (int i = 0; i < table.p1.getMaxChains(); i++)
         {
-            cout << table.p1.getName() << "'s Chains.. \n"
-                 << endl;
+           
             cout << table.p1.chains.at(i) << endl;
         }
 
         cout << "\n"
              << table.p1.getName() << "'s Hand ..\n"
              << table.p1.hand << endl;
+              
 
         // display table
         cout << table << endl;
@@ -54,6 +58,7 @@ int main()
         }
         else
         {
+            //if we run out of cards break out and check who wins
             checkWhoWon(table);
             break;
         }
@@ -90,7 +95,6 @@ int main()
             if (autoplay && table.p1.getMaxChains() == table.p1.getNonZeroChains())
             {
                 table.p1.operator+=(table.p1.chains.at(0).startFreshChain(table.p1.hand.play()));
-
                 autoplay = false;
             }
 
@@ -142,7 +146,6 @@ int main()
         }
 
         // if chains are ended the sell them
-
         cout << "---------------------SELLING AVALIBLE CHAINS ---------------------" << endl;
         for (int i = 0; i < table.p1.getMaxChains(); i++)
         {
@@ -175,12 +178,16 @@ int main()
             cout << "what card would you like to discard starting at 0? " << endl;
             string h;
             cin >> h;
+            //check to see if the input is a valid number 
             if (isNumber(h))
             {
+                //convert to a number 
                 int number = stoi(h);
                 table.dp.operator+=(table.p1.hand[number]);
+                //go to card that the player wants to delete
                 auto itterator = table.p1.hand.hand.begin();
                 advance(itterator, number);
+                //delete it 
                 table.p1.hand.hand.erase(itterator);
             }
         }
@@ -239,6 +246,7 @@ int main()
                 break;
             }
         }
+        //display the chains
         cout << table.p1.getName() << "'s Chains.. \n"
              << endl;
         for (int i = 0; i < table.p1.getMaxChains(); i++)
@@ -258,7 +266,9 @@ int main()
         }
         cout << "----------------------------- other players turn -----------------------------------" << endl;
         cout << "--------------------- Player " << table.p2.getName() << " turn ---------------------" << endl;
-        for (int i = 0; i < 2; i++)
+        cout << "\n Coins: "<< table.p2.getNumCoins() << endl;
+
+        
             cout << table.p2.getName() << "'s Chains.. \n"
                  << endl;
         for (int i = 0; i < table.p2.getMaxChains(); i++)
@@ -269,7 +279,7 @@ int main()
         cout << "\n"
              << table.p2.getName() << "'s Hand ..\n"
              << table.p2.hand << endl;
-
+              
         // display table
         cout << table << endl;
         // player draws a card
@@ -480,13 +490,11 @@ int main()
         }
 
     } while (!table.deck->deck.empty());
-    checkWhoWon(table);
-
    
 }
 
 void checkWhoWon(Table t){
-    cout<<"--------------------------------END OF GAME--------------------------------"<<endl;
+    cout<<"--------------------------------END OF GAME-------------------------------- \n Deck out of cards" <<endl;
      string p1 = t.p1.getName();
     if (t.win(p1))
     {

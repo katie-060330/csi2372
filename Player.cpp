@@ -1,5 +1,7 @@
 #include "Player.h"
+//default constuctor 
 Player::Player() {}
+//constructor used to create the player 
 Player::Player(std::string &n)
 {
 
@@ -12,6 +14,7 @@ Player::Player(std::string &n)
     chains = std::vector<Chain<Card *>>(2);
 
 }
+//returns the number of chains that arent empty
 int Player::getNonZeroChains()
 {
     int k = 0;
@@ -25,10 +28,12 @@ int Player::getNonZeroChains()
     return chains.size() - k;
 }
 
+//bonus of one mark.. we didnt chose to do that 
 Player::Player(istream &in, const CardFactory cardFactory)
 {
-    // TODO ??
+    
 }
+//getters
 std::string Player::getName() const
 {
     return name;
@@ -37,6 +42,7 @@ int Player::getNumCoins()
 {
     return totalCoins;
 }
+//adding coins for when we sell the chain 
 Player &Player::operator+=(int coins)
 {
     totalCoins += coins;
@@ -48,6 +54,7 @@ int Player::getMaxChains()
 {
     return numberOfChains;
 }
+//getting chain at position i
 Chain<Card *> &Player::operator[](int i)
 {
     return (chains.at(i));

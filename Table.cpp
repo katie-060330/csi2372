@@ -18,6 +18,7 @@ Table::Table()
     dp = DiscardPile();
     ta = TradeArea();
 }
+//check to see who wins
 bool Table::win(std::string &s)
 {
     if (deck->deck.empty())
@@ -36,16 +37,18 @@ bool Table::win(std::string &s)
 
 void Table::printHand(bool showFullHand)
 {
+    //if the player wants to show thier full hand or just the top 
     if (showFullHand)
     {
         cout << hand;
-        // TODO print the full hand to the ostream
+    
     }
     else
     {
         cout << hand->top();
     }
 }
+//printintg the table, that has the discard pile and the trade area along wiht both players 
 std::ostream &operator<<(std::ostream &out, const Table &table)
 {
     // printing out the two players

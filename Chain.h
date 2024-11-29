@@ -52,10 +52,11 @@ public:
         return chain.empty() ? "Empty" : chain.front()->getName();
     }
 
-    void startFreshChain(Card *card)
+    int startFreshChain(Card *card)
     {
-        sell();
+        int coins = sell();
         *this += card;
+        return coins; 
     }
 
     Card *getCardType()

@@ -49,6 +49,7 @@ void Table::printHand(bool showFullHand)
 std::ostream &operator<<(std::ostream &out, const Table &table)
 {
     // printing out the two players
+     out << "--------------------- Table ---------------------" << endl;
     out << "Player One: " << table.p1.getName() << endl;
     out << "Player One: " << table.p2.getName() << endl;
 

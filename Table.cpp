@@ -21,18 +21,13 @@ Table::Table()
 //check to see who wins
 bool Table::win(std::string &s)
 {
-    if (deck->deck.empty())
-    {
+
         if (p1.getName() == s && p1.getNumCoins() > p2.getNumCoins())
         {
             return true;
         }
-        else if (p2.getName() == s && p1.getNumCoins() < p2.getNumCoins())
-        {
-            return true;
-        }
-    }
-    return false;
+return false; 
+
 }
 
 void Table::printHand(bool showFullHand)
@@ -52,7 +47,6 @@ void Table::printHand(bool showFullHand)
 std::ostream &operator<<(std::ostream &out, const Table &table)
 {
     // printing out the two players
-     out << "--------------------- Table ---------------------" << endl;
     out << "Player One: " << table.p1.getName() << endl;
     out << "Player One: " << table.p2.getName() << endl;
 

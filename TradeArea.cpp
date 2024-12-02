@@ -20,8 +20,9 @@ bool TradeArea::legal(Card *c)
         {
             return true;
         }
-        return false;
+       
     }
+     return false;
 }
 
 //check to see if this card can be traded and if it can, remove it from the trade block and return it, if the trade block is empty then return nill

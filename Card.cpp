@@ -57,10 +57,7 @@ int Blue::getCoinsPerCard(int cards)
     {
         return 4;
     }
-    else
-    {
-        return -1; 
-    }
+ 
 }
 
 string Blue::getName()
@@ -118,10 +115,7 @@ int Chili::getCoinsPerCard(int cards)
     {
         return 4;
     }
-    else
-    {
-        return -1; 
-    }
+ 
 }
 
 string Chili::getName()
@@ -243,10 +237,7 @@ int Green::getCoinsPerCard(int cards)
         return 4;
     }
 
-    else
-    {
-        return -1; 
-    }
+ 
 }
 
 string Green::getName()
@@ -305,10 +296,7 @@ int Soy::getCoinsPerCard(int cards)
         return 4;
     }
     // not enought cards in teh deck to make a chain
-    else
-    {
-        return -1; 
-    }
+ 
 }
 
 string Soy::getName()

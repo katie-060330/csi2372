@@ -2,8 +2,10 @@
 #include <string>
 #include <cctype>
 #include "Table.h"
+#include <stdlib.h>
 using namespace std;
 void checkWhoWon(Table t);
+bool match(Player p);
 char input;
 
 // Checks user input to see if they have inputed a number
@@ -32,37 +34,27 @@ int main()
     do
     {
         cout << "--------------------- Player " << table.p1.getName() << " turn ---------------------" << endl;
-
-        //display the chains and coins and hand
-        cout << "\n Coins: "<< table.p1.getNumCoins() << endl;
-         cout << table.p1.getName() << "'s Chains.. \n"
-                 << endl;
+        cout << table.p1.getName() << "'s Chains.. \n"
+             << endl;
         for (int i = 0; i < table.p1.getMaxChains(); i++)
         {
-           
+
             cout << table.p1.chains.at(i) << endl;
         }
 
-        cout << "\n"
-             << table.p1.getName() << "'s Hand ..\n"
-             << table.p1.hand << endl;
-              
+
+        cout << "\n"<< table.p1.getName() <<"s \n" << " Coins: " << table.p1.getNumCoins() <<"\n"<< "Hand... "<< table.p1.hand << endl;
 
         // display table
+        cout << "---------------------Table ---------------------" << endl;
         cout << table << endl;
-        // player draws a card, if there are cards left otherwise break out of the gaem ends
-        Card *draw = table.deck->draw();
-        if (draw)
+        // player draws a card
+        if (table.deck->deck.empty())
         {
-            table.p1.hand.operator+=(draw);
-        }
-        else
-        {
-            //if we run out of cards break out and check who wins
             checkWhoWon(table);
-            break;
+            exit(-1);
         }
-
+        table.p1.hand.operator+=(table.deck->draw());
         // if ta is not empty add a bean card to chains or discard them
         if (!table.ta.tradeArea.empty())
         {
@@ -92,9 +84,10 @@ int main()
                 cout << table.p1.chains.at(i) << endl;
             }
             // replace chain 1 to empty and start fresh chain
-            if (autoplay && table.p1.getMaxChains() == table.p1.getNonZeroChains())
+            if (autoplay && table.p1.getMaxChains() == table.p1.getNonZeroChains() && !match(table.p1))
             {
                 table.p1.operator+=(table.p1.chains.at(0).startFreshChain(table.p1.hand.play()));
+
                 autoplay = false;
             }
 
@@ -134,9 +127,16 @@ int main()
                 {
                     cout << table.p1.chains.at(i) << endl;
                 }
-                cout << "Would you like to play you have to play (y): " << table.p1.hand.top()->getName() << endl;
+                if (!table.p1.hand.hand.empty() || !table.p1.getNonZeroChains() == table.p1.getMaxChains())
+                {
+                    cout << "Would you like to play you have to play (y): " << table.p1.hand.top()->getName() << endl;
 
-                cin >> input;
+                    cin >> input;
+                }
+                else
+                {
+                    input = 'n';
+                }
             }
 
             else
@@ -146,6 +146,7 @@ int main()
         }
 
         // if chains are ended the sell them
+
         cout << "---------------------SELLING AVALIBLE CHAINS ---------------------" << endl;
         for (int i = 0; i < table.p1.getMaxChains(); i++)
         {
@@ -178,16 +179,12 @@ int main()
             cout << "what card would you like to discard starting at 0? " << endl;
             string h;
             cin >> h;
-            //check to see if the input is a valid number 
             if (isNumber(h))
             {
-                //convert to a number 
                 int number = stoi(h);
                 table.dp.operator+=(table.p1.hand[number]);
-                //go to card that the player wants to delete
                 auto itterator = table.p1.hand.hand.begin();
                 advance(itterator, number);
-                //delete it 
                 table.p1.hand.hand.erase(itterator);
             }
         }
@@ -196,23 +193,33 @@ int main()
 
         for (int i = 0; i < 3; i++)
         {
-            draw = table.deck->draw();
-            if (draw)
+            if (table.deck->deck.empty())
             {
-                table.ta.operator+=(draw);
+                checkWhoWon(table);
+                exit(-1);
             }
-            else
+            table.ta.operator+=(table.deck->draw());
+            if (table.deck->deck.empty())
             {
-                break;
+                checkWhoWon(table);
+                exit(-1);
             }
         }
 
         //*while teh top card of the discard matches any in the discad pile
 
-        while (table.dp.pickUp() != nullptr && table.ta.legal(table.dp.pickUp()))
+        while (true)
         {
-            Card *returned = table.dp.pickUp();
-            table.ta.operator+=(returned);
+
+            Card *topCard = table.dp.top();
+
+            if (topCard == nullptr || !table.ta.legal(topCard))
+            {
+                break;
+            }
+
+            Card *pickedCard = table.dp.pickUp();
+            table.ta.operator+=(pickedCard);
         }
 
         // adds the cards to the back of the players chains if they match
@@ -236,17 +243,14 @@ int main()
         cout << "---------------------End player turn   ---------------------" << endl;
         for (int i = 0; i < 2; i++)
         {
-            draw = table.deck->draw();
-            if (draw)
+            if (table.deck->deck.empty())
             {
-                table.p1.hand.operator+=(draw);
+                checkWhoWon(table);
+                exit(-1);
             }
-            else
-            {
-                break;
-            }
+
+            table.p1.hand.operator+=(table.deck->draw());
         }
-        //display the chains
         cout << table.p1.getName() << "'s Chains.. \n"
              << endl;
         for (int i = 0; i < table.p1.getMaxChains(); i++)
@@ -266,32 +270,26 @@ int main()
         }
         cout << "----------------------------- other players turn -----------------------------------" << endl;
         cout << "--------------------- Player " << table.p2.getName() << " turn ---------------------" << endl;
-        cout << "\n Coins: "<< table.p2.getNumCoins() << endl;
 
-        
-            cout << table.p2.getName() << "'s Chains.. \n"
-                 << endl;
+        cout << table.p2.getName() << "'s Chains.. \n"<< endl;
         for (int i = 0; i < table.p2.getMaxChains(); i++)
         {
             cout << table.p2.chains.at(i) << endl;
         }
 
         cout << "\n"
-             << table.p2.getName() << "'s Hand ..\n"
-             << table.p2.hand << endl;
-              
+             << table.p2.getName() <<"s \n" << " Coins: " << table.p2.getNumCoins() <<"\n"<< "Hand... "<< table.p2.hand << endl;
+
         // display table
+        cout << "---------------------Table ---------------------" << endl;
         cout << table << endl;
         // player draws a card
-        draw = table.deck->draw();
-        if (draw)
+        if (table.deck->deck.empty())
         {
-            table.p2.hand.operator+=(draw);
-        }
-        else
-        {
+            checkWhoWon(table);
             break;
         }
+        table.p2.hand.operator+=(table.deck->draw());
         // if ta is not empty add a bean card to chains or discard them
         if (!table.ta.tradeArea.empty())
         {
@@ -321,7 +319,7 @@ int main()
                 cout << table.p2.chains.at(i) << endl;
             }
             // replace chain 1 to empty and start fresh chain
-            if (autoplay && table.p2.getMaxChains() == table.p2.getNonZeroChains())
+            if (autoplay && table.p2.getMaxChains() == table.p2.getNonZeroChains() && !match(table.p2))
             {
                 table.p2.operator+=(table.p2.chains.at(0).startFreshChain(table.p2.hand.play()));
 
@@ -364,9 +362,16 @@ int main()
                 {
                     cout << table.p2.chains.at(i) << endl;
                 }
-                cout << "Would you like to play you have to play (y): " << table.p2.hand.top()->getName() << endl;
+                if (!table.p2.hand.hand.empty() || !table.p2.getNonZeroChains() == table.p2.getMaxChains())
+                {
+                    cout << "Would you like to play you have to play (y): " << table.p2.hand.top()->getName() << endl;
 
-                cin >> input;
+                    cin >> input;
+                }
+                else
+                {
+                    input = 'n';
+                }
             }
 
             else
@@ -423,14 +428,16 @@ int main()
 
         for (int i = 0; i < 3; i++)
         {
-            draw = table.deck->draw();
-            if (draw)
+            if (table.deck->deck.empty())
             {
-                table.ta.operator+=(draw);
+                checkWhoWon(table);
+                exit(-1);
             }
-            else
+            table.ta.operator+=(table.deck->draw());
+            if (table.deck->deck.empty())
             {
-                break;
+                checkWhoWon(table);
+                exit(-1);
             }
         }
         // while the top most card matches the chain chain it up
@@ -438,11 +445,18 @@ int main()
         // while the top card of the dp matches any o fhte chain chain them up
 
         //*while teh top card of the discard matches any in the discad pile
-
-        while (table.dp.pickUp() && table.ta.legal(table.dp.pickUp()))
+        while (true)
         {
-            Card *returned = table.dp.pickUp();
-            table.ta.operator+=(returned);
+
+            Card *topCard = table.dp.top();
+
+            if (topCard == nullptr || !table.ta.legal(topCard))
+            {
+                break;
+            }
+
+            Card *pickedCard = table.dp.pickUp();
+            table.ta.operator+=(pickedCard);
         }
 
         // adds the cards to the back of the players chains if they match
@@ -463,15 +477,13 @@ int main()
         cout << "---------------------End player turn   ---------------------" << endl;
         for (int i = 0; i < 2; i++)
         {
-            draw = table.deck->draw();
-            if (draw)
+            if (table.deck->deck.empty())
             {
-                table.p2.hand.operator+=(draw);
-            }
-            else
-            {
+                checkWhoWon(table);
                 break;
             }
+
+            table.p2.hand.operator+=(table.deck->draw());
         }
         cout << table.p2.getName() << "'s Chains.. \n"
              << endl;
@@ -483,19 +495,19 @@ int main()
         cout << "\n"
              << table.p2.getName() << "'s Hand ..\n"
              << table.p2.hand << endl;
+
         if (table.deck->deck.empty())
         {
-           checkWhoWon(table);
+            checkWhoWon(table);
             break;
         }
-
     } while (!table.deck->deck.empty());
-   
 }
 
-void checkWhoWon(Table t){
-    cout<<"--------------------------------END OF GAME-------------------------------- \n Deck out of cards" <<endl;
-     string p1 = t.p1.getName();
+void checkWhoWon(Table t)
+{
+    cout << "--------------------------------END OF GAME-------------------------------- \nDeck out of cards" << endl;
+    string p1 = t.p1.getName();
     if (t.win(p1))
     {
         cout << p1 << " WINS!!!!" << endl;
@@ -504,5 +516,19 @@ void checkWhoWon(Table t){
     {
         cout << t.p2.getName() << " WINS!!!!" << endl;
     }
-
 }
+
+bool match(Player p)
+{
+    Card *top = p.hand.top();
+    bool toReturn = false;
+    for (int i = 0; i < p.getMaxChains(); i++)
+    {
+        if (top->getName() == p.chains.at(i).getType())
+        {
+            toReturn = true;
+        }
+    }
+    return toReturn;
+}
+

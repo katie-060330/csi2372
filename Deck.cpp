@@ -3,7 +3,7 @@
 //crawing a cards and deleteing it from the deck 
 Card *Deck::draw()
 {
-   
+   //drawing a card and erasing it from the deck 
     if (!deck.empty())
     {
         Card *toReturn = deck.front();
@@ -16,6 +16,7 @@ Card *Deck::draw()
     }
 }
 
+//printing out the deck
 std::ostream &operator<<(std::ostream &out, const Deck &d)
 {
     for (auto current = d.deck.begin(); current != d.deck.end(); current++)

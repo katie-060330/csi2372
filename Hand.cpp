@@ -34,7 +34,7 @@ Card *Hand::top() const
 
 Card *Hand::operator[](int i)
 {
-    if (i < 0 || i >= hand.size() )
+    if (i < 0 || i >= hand.size())
     {
         throw std::invalid_argument("Index out of bounds");
     }
@@ -44,8 +44,7 @@ Card *Hand::operator[](int i)
     return *front;
 }
 
-
-//prints out the hand, if the hand is empty it will say that 
+// prints out the hand, if the hand is empty it will say that
 std::ostream &operator<<(std::ostream &out, const Hand &h)
 {
     if (h.hand.empty())

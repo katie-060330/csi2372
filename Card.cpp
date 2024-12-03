@@ -3,8 +3,7 @@
 #include <stdexcept>
 #include <iostream>
 
-
-std::ostream& operator<<(std::ostream& out, const Card& card)
+std::ostream &operator<<(std::ostream &out, const Card &card)
 {
     card.print(out);
     return out;
@@ -36,7 +35,7 @@ int Blue::getCardsPerCoin(int coins)
 
 int Blue::getCoinsPerCard(int cards)
 {
-    //when the chain doesnt make any coins
+    // when the chain doesnt make any coins
     if (cards < 4 && cards >= 0)
     {
         return 0;
@@ -57,7 +56,6 @@ int Blue::getCoinsPerCard(int cards)
     {
         return 4;
     }
- 
 }
 
 string Blue::getName()
@@ -115,7 +113,6 @@ int Chili::getCoinsPerCard(int cards)
     {
         return 4;
     }
- 
 }
 
 string Chili::getName()
@@ -174,10 +171,7 @@ int Stink::getCoinsPerCard(int cards)
         return 4;
     }
 
-    else
-    {
-       return -1; 
-    }
+
 }
 
 string Stink::getName()
@@ -236,8 +230,6 @@ int Green::getCoinsPerCard(int cards)
     {
         return 4;
     }
-
- 
 }
 
 string Green::getName()
@@ -296,7 +288,6 @@ int Soy::getCoinsPerCard(int cards)
         return 4;
     }
     // not enought cards in teh deck to make a chain
- 
 }
 
 string Soy::getName()
@@ -355,10 +346,7 @@ int Black::getCoinsPerCard(int cards)
         return 4;
     }
 
-    else
-    {
-       return -1; 
-    }
+
 }
 
 string Black::getName()
@@ -417,10 +405,7 @@ int Red::getCoinsPerCard(int cards)
         return 4;
     }
 
-    else
-    {
-       return -1; 
-    }
+
 }
 
 string Red::getName()
@@ -467,15 +452,12 @@ int Garden::getCoinsPerCard(int cards)
     {
         return 2;
     }
-    else if (cards == 3)
+    else if (cards <= 3)
     {
         return 3;
     }
     // not enought cards in teh deck to make a chain
-    else
-    {
-        return -1;
-    }
+
 }
 
 string Garden::getName()

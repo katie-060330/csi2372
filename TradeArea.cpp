@@ -2,7 +2,6 @@
 
 TradeArea::TradeArea(istream &in, const CardFactory cardFactory)
 {
-
 }
 
 TradeArea &TradeArea::operator+=(Card *c)
@@ -11,7 +10,7 @@ TradeArea &TradeArea::operator+=(Card *c)
     tradeArea.push_back(c);
     return *this;
 }
-//checks to see if this card is in the trade area
+// checks to see if this card is in the trade area
 bool TradeArea::legal(Card *c)
 {
     for (Card *card : tradeArea)
@@ -20,12 +19,11 @@ bool TradeArea::legal(Card *c)
         {
             return true;
         }
-       
     }
-     return false;
+    return false;
 }
 
-//check to see if this card can be traded and if it can, remove it from the trade block and return it, if the trade block is empty then return nill
+// check to see if this card can be traded and if it can, remove it from the trade block and return it, if the trade block is empty then return nill
 Card *TradeArea::trade(string s)
 {
     // using iterator over list to find the
@@ -41,7 +39,7 @@ Card *TradeArea::trade(string s)
     }
     return nullptr;
 }
-//getter
+// getter
 int TradeArea::numCards()
 {
     return tradeArea.size();
@@ -54,12 +52,12 @@ void TradeArea::displayTradeArea()
         cout << c->getName() << " ";
     }
 }
-//remove the trade area
+// remove the trade area
 void TradeArea::discard()
 {
     tradeArea.clear();
 }
-//overloaded in the table class
+// overloaded in the table class
 std::ostream &operator<<(std::ostream &out, const TradeArea &tA)
 {
 

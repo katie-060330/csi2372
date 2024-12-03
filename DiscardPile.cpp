@@ -1,13 +1,13 @@
 #include "DiscardPile.h"
 
-//adds to the discard pile 
+// adds to the discard pile
 DiscardPile &DiscardPile::operator+=(Card *c)
 {
     discardPile.push_back(c);
     return *this;
 }
 
-//removes the top from the discard pile and reases it, if it empty then it returns a null ptr 
+// removes the top from the discard pile and reases it, if it empty then it returns a null ptr
 Card *DiscardPile::pickUp()
 {
     if (!discardPile.empty())
@@ -19,7 +19,7 @@ Card *DiscardPile::pickUp()
 
     return nullptr;
 }
-// retuns the top card of the discard pile but doenst change anything 
+// retuns the top card of the discard pile but doenst change anything
 Card *DiscardPile::top() const
 {
 
@@ -32,7 +32,7 @@ Card *DiscardPile::top() const
 
 void DiscardPile::print(std::ostream &out)
 {
-    // TODO again ask how these inputs and outputs work
+
     //*print out all the cards taht where just added to the
 
     for (Card *c : discardPile)
@@ -41,7 +41,7 @@ void DiscardPile::print(std::ostream &out)
     }
 }
 
-//does nothing becaseu we overload this in teh table outstream 
+// does nothing because we overload this in teh table outstream
 std::ostream &operator<<(ostream &os, const DiscardPile &dPile)
 {
 

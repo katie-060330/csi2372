@@ -10,23 +10,20 @@
 
 using namespace std;
 
-
 class Deck;
-class CardFactory{
+class CardFactory
+{
 
-    public:
-       static const int deckSize = 104;
-       static vector<Card*> deckToBe;
-       static CardFactory* instance;
-       CardFactory();
+public:
+    static const int deckSize = 104;
+    static vector<Card *> deckToBe;
+    static CardFactory *instance;
+    CardFactory();
 
-    
-    Deck* cardDeck;
+    Deck *cardDeck;
     ~CardFactory();
-    static CardFactory* getCardFactory();
-    Deck* getDeck();
-    Card* getCard(string cardType) const;
+    static CardFactory *getCardFactory();
+    Deck *getDeck();
 };
-
 
 #endif

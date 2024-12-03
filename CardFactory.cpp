@@ -7,7 +7,7 @@ CardFactory *CardFactory::instance = nullptr;
 // static initalization of the array deck to be
 std::vector<Card *> CardFactory::deckToBe(CardFactory::deckSize);
 
-// constructor creating all of hte cards
+// constructor creating all of the cards here
 CardFactory::CardFactory()
 {
 
@@ -55,7 +55,7 @@ CardFactory::~CardFactory()
         delete card;
     }
 }
-
+// singleton pattern creating the card factory if not already created
 CardFactory *CardFactory::getCardFactory()
 {
     if (instance == nullptr)
@@ -65,14 +65,16 @@ CardFactory *CardFactory::getCardFactory()
     return instance;
 }
 
-// creating the deck and suffling it
+// creating the deck and shuffling it
 Deck *CardFactory::getDeck()
 {
+    // creating the deck
     Deck *cardDeck = new Deck();
     for (int i = 0; i < deckSize; i++)
     {
         cardDeck->deck.push_back(deckToBe[i]);
     }
+    // shuffling the deck
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::shuffle(cardDeck->deck.begin(), cardDeck->deck.end(), std::default_random_engine(seed));
 

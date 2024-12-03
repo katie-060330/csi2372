@@ -18,39 +18,37 @@ Table::Table()
     dp = DiscardPile();
     ta = TradeArea();
 }
-//check to see who wins
+// check to see who wins
 bool Table::win(std::string &s)
 {
 
-        if (p1.getName() == s && p1.getNumCoins() > p2.getNumCoins())
-        {
-            return true;
-        }
-return false; 
-
+    if (p1.getName() == s && p1.getNumCoins() > p2.getNumCoins())
+    {
+        return true;
+    }
+    return false;
 }
 
 void Table::printHand(bool showFullHand)
 {
-    //if the player wants to show thier full hand or just the top 
+    // if the player wants to show thier full hand or just the top
     if (showFullHand)
     {
         cout << hand;
-    
     }
     else
     {
         cout << hand->top();
     }
 }
-//printintg the table, that has the discard pile and the trade area along wiht both players 
+// printintg the table, that has the discard pile and the trade area along wiht both players
 std::ostream &operator<<(std::ostream &out, const Table &table)
 {
     // printing out the two players
     out << "Player One: " << table.p1.getName() << endl;
-    out << "Player One: " << table.p2.getName() << endl;
+    out << "Player Two: " << table.p2.getName() << endl;
 
-    // discard pile outstream operator
+    // overloading the discard pile outstream operator
     out << "Discard Pile:\t";
     if (table.dp.discardPile.empty())
     {
@@ -61,7 +59,7 @@ std::ostream &operator<<(std::ostream &out, const Table &table)
         out << table.dp.top()->getName() << endl;
     }
 
-    // trade area outstream
+    // over loading the trade area outstream
     out << "Trade Area:\t";
     if (table.ta.tradeArea.empty())
     {

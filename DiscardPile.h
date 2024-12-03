@@ -5,23 +5,20 @@
 #include <vector>
 #include <vector>
 
+class DiscardPile
+{
+public:
+    std::vector<Card *> discardPile;
 
-class DiscardPile{
-    public:
-   std::vector<Card *> discardPile;
+    // TODO
+    DiscardPile() {}
+    // DiscardPile(istream& in, const CardFactory* cardFactory);
+    DiscardPile &operator+=(Card *c);
+    Card *pickUp();
+    Card *top() const;
 
-    //TODO
-    DiscardPile(){}
-   //DiscardPile(istream& in, const CardFactory* cardFactory);
-   DiscardPile& operator+=(Card* c);
-   Card* pickUp();
-    Card* top() const;
-
-
-   void print(std::ostream& out);
-//TODO insertion operator??
-    friend ostream& operator<<(ostream& os,const DiscardPile& dPile);
-
-
+    void print(std::ostream &out);
+    // TODO insertion operator??
+    friend ostream &operator<<(ostream &os, const DiscardPile &dPile);
 };
 #endif

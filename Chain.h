@@ -18,25 +18,22 @@ public:
     // adding cards to the chian
     Chain<T> &operator+=(Card *card)
     {
-        // make sure that they match the chain
+        // make sure that they match the chain before adding it
         if (typeid(card) != typeid(chain.front()))
         {
             throw std::invalid_argument("Card doesn't match the chain");
         }
         else
         {
+            // adding the card to the chian
             chain.push_back(card);
         }
         return *this;
     }
 
-    void addCard(Card *card)
-    {
-        *this += card;
-    }
-
     int sell()
     {
+        // gets no coins if the chain is empty
         if (chain.empty())
         {
             return 0;
@@ -48,13 +45,14 @@ public:
         return coins;
     }
 
-    // for checkign the chain type to add cards
+    // for checking the chain type to add cards
+    // returns the type name of the chain
     string getType()
     {
         return chain.empty() ? "Empty" : chain.front()->getName();
     }
 
-    // when the chains are full and they are forced to sell a chain becasue the player needs to sell
+    // when the chains are full and they are forced to sell a chain because the player needs to sell
     int startFreshChain(Card *card)
     {
         int coins = sell();
@@ -86,11 +84,10 @@ public:
             {
                 output << f.at(0) << " ";
             }
-
         }
         return output;
     }
-    
+
     int getSize()
     {
         return chain.size();

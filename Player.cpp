@@ -1,7 +1,7 @@
 #include "Player.h"
-//default constuctor 
+// default constuctor
 Player::Player() {}
-//constructor used to create the player 
+// constructor used to create the player
 Player::Player(std::string &n)
 {
 
@@ -12,9 +12,8 @@ Player::Player(std::string &n)
     nonZeroChains = 0;
     hand = Hand();
     chains = std::vector<Chain<Card *>>(2);
-
 }
-//returns the number of chains that arent empty
+// returns the number of chains that arent empty
 int Player::getNonZeroChains()
 {
     int k = 0;
@@ -28,12 +27,11 @@ int Player::getNonZeroChains()
     return chains.size() - k;
 }
 
-//bonus of one mark.. we didnt chose to do that 
+// bonus of one mark.. we didnt chose to do that
 Player::Player(istream &in, const CardFactory cardFactory)
 {
-    
 }
-//getters
+// getters
 std::string Player::getName() const
 {
     return name;
@@ -42,7 +40,7 @@ int Player::getNumCoins()
 {
     return totalCoins;
 }
-//adding coins for when we sell the chain 
+// adding coins for when we sell the chain
 Player &Player::operator+=(int coins)
 {
     totalCoins += coins;
@@ -54,7 +52,7 @@ int Player::getMaxChains()
 {
     return numberOfChains;
 }
-//getting chain at position i
+// getting chain at position i
 Chain<Card *> &Player::operator[](int i)
 {
     return (chains.at(i));
@@ -78,13 +76,14 @@ Hand &Player::getHand()
 {
     return hand;
 }
+// print out the top card or the whole hand
 void Player::printHand(std::ostream &out, bool showFullHand)
 {
     if (showFullHand)
     {
         // uisng insertion opperator
         cout << hand;
-        // TODO print the full hand to the ostream
+        //  print the full hand to the ostream
     }
     else
     {
